@@ -11,7 +11,7 @@
 					<a href="#" v-for="(item,index) in parts" @click="addClass(index)"
 					:class="[{'current-tab':index==currentClick},'topic-tab']">{{item}}</a>
 
-					<!-- <a href="#" id="haha" class="topic-tab current-tab">全部</a>
+					<!-- <a href="#" class="topic-tab current-tab">全部</a>
 					<a href="#" class="topic-tab">精华</a>
 					<a href="#" class="topic-tab">分享</a>
 					<a href="#" class="topic-tab">问答</a>
