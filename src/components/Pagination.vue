@@ -17,6 +17,9 @@
 
   export default {
     name: 'Pagination',
+    props:[
+      'tab'
+    ],
     data(){
     	return {
     		pagebtns: [1,2,3,4,5],
@@ -66,6 +69,13 @@
     		// }
     		this.$emit('handleList',this.currentPage)
     	}
+    },
+    watch: {
+      // 页码发生跳转后点击帖子分类切换回到该分类首页
+      tab: function(val, oldVal){
+        this.pagebtns = [1,2,3,4,5]
+        this.changeBtn(1)
+      }
     }
   }
 </script>

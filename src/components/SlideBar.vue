@@ -43,6 +43,7 @@
     	</div>
     	<div class="inner recent-replies">
         <!-- 判断对象是否为空 -->
+        <!-- 若直接用length判断，当请求的数据未返回时，length会报错 -->
         <ul v-if="userinfo.recent_replies!=undefined && userinfo.recent_replies.length>0">
     			<li v-for="list in replyLimitBy5">
     				<router-link :to="{

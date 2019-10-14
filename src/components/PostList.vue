@@ -8,14 +8,14 @@
 			<div class="panel">
 				<!-- 帖子导航 -->
 				<div class="header">
-					<a href="#" ref="all" class="current-tab" @click="clickMe(all)">全部</a>
-					<a href="#" ref="good" @click="clickMe(good)">精华</a>
-					<a href="#" ref="share" @click="clickMe(share)">分享</a>
-					<a href="#" ref="ask" @click="clickMe(ask)">问答</a>
-					<a href="#" ref="job" @click="clickMe(job)">招聘</a>
-					<a href="#" ref="client" @click="clickMe(client)">客户端测试</a>
+					<span :class="{'current-tab':active==1}" @click="changeTab('',1)">全部</span>
+					<span :class="{'current-tab':active==2}" @click="changeTab('good',2)">精华</span>
+					<span :class="{'current-tab':active==3}" @click="changeTab('share',3)">分享</span>
+					<span :class="{'current-tab':active==4}" @click="changeTab('ask',4)">问答</span>
+					<span :class="{'current-tab':active==5}" @click="changeTab('job',5)">招聘</span>
+					<span :class="{'current-tab':active==6}" @click="changeTab('',6)">客户端测试</span>
 
-					<!-- <a href="#" v-for="(item,index) in parts" @click="addClass(index)"
+					<!-- <a href="#" v-for="(item,index) in parts" @click="changeClass(index)"
 					:class="[{'current-tab':index==currentClick},'topic-tab']">{{item}}</a> -->
 				</div>
 				<!-- 帖子列表 -->
@@ -57,7 +57,7 @@
 							</li>
 							<li>
 								<!-- 分页 -->
-								<pagination @handleList="renderList"></pagination>
+								<pagination @handleList="renderList" :tab='tab'></pagination>
 							</li>
 						</ul>
 					</div>
@@ -79,7 +79,9 @@
 				// parts: ['全部','精华','分享','问答','招聘','客户端测试'],
 				// currentClick: 0,
 				posts: [], // 代表页面列表的数组
-				postPage: 1,
+				pageNumber: 1,
+				tab: '',
+				active: 1
 			}
 		},
 		components: {
@@ -89,8 +91,9 @@
 			getData: function(){
 				this.$http.get('https://cnodejs.org/api/v1/topics', {
 					params: {
-						page: this.postPage,
+						page: this.pageNumber,
 						limit: 20,
+						tab: this.tab
 					}
 				})
 					.then((res)=>{
@@ -101,34 +104,17 @@
 						console.log(err)
 					})
 			},
-			// addClass: function(index){
+			// changeClass: function(index){
     	// 	this.currentClick = index
     	// },
-    	renderList: function(value){
-				this.postPage = value
+    	changeTab: function(value, index){
+    		this.tab = value
+				this.active = index
 				this.getData()
 			},
-			// changeAll(){
-			// 	$('#all').addClass('current-tab').siblings().removeClass('current-tab')
-			// },
-			// changeGood(){
-			// 	$('#good').addClass('current-tab').siblings().removeClass('current-tab')
-			// },
-			// changeShare(){
-			// 	$('#share').addClass('current-tab').siblings().removeClass('current-tab')
-			// },
-			// changeAsk(){
-			// 	$('#ask').addClass('current-tab').siblings().removeClass('current-tab')
-			// },
-			// changeJob(){
-			// 	$('#job').addClass('current-tab').siblings().removeClass('current-tab')
-			// },
-			// changeClient(){
-			// 	$('#client').addClass('current-tab').siblings().removeClass('current-tab')
-			// },
-			clickMe: function(refName){
-				this.$refs.classList.$remove('current-tab')
-				this.$refs.refName.classList.add('current-tab')
+    	renderList: function(value){
+				this.pageNumber = value
+				this.getData()
 			}
 		},
 		beforeMount(){
@@ -154,16 +140,16 @@
 		border-radius: 3px 3px 0 0;
 		padding: 10px;
 	}
-	.header a{
+	.header span{
 		text-decoration: none;
 		color: #80BD01;
 		margin: 0 10px;
 		cursor: pointer;
 	}
-	.header a:hover{
+	.header span:hover{
 		color: #005580;
 	}
-	.header a.current-tab{
+	.header span.current-tab{
 		background: #80BD01;
 		color: #fff;
 		padding: 3px 4px;
@@ -184,8 +170,11 @@
 		line-height: 2em;
 		overflow: hidden;
 	}
-	.posts li:nth:child(1){
+	.posts li:first-child{
 		border-top: none;
+	}
+	.posts li:hover {
+	  background: #f5f5f5;
 	}
 	.posts li img{
 		width: 30px;
@@ -240,5 +229,8 @@
 		white-space: nowrap; /*不换行*/
 		text-overflow: ellipsis; /*用省略符号替代被修剪的文本*/
 		overflow: hidden;
+	}
+	a span:hover{
+		text-decoration: underline;
 	}
 </style>

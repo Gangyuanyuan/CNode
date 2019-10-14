@@ -4,7 +4,9 @@
 			<img src="../assets/loading.gif" alt="">
 		</div>
 		<div class="content" v-else>
+			<!-- 文章模块 -->
 			<div class="panel">
+				<!-- 标题栏 -->
 				<div class="header topic">
 					<span class="topic-title">{{post.title}}</span>
 					<ul>
@@ -14,10 +16,12 @@
 						<li>• 来自 {{post | tabFormatter}}</li>
 					</ul>
 				</div>
-				<div id="content" class="inner topic">
-					<div class="topic-content" v-html="post.content"></div>
+				<!-- 文章内容 -->
+				<div class="inner topic">
+					<div class="topic-content markdown-body" v-html="post.content"></div>
 				</div>
 			</div>
+			<!-- 评论模块 -->
 			<div class="panel">
 				<div class="header reply">
 					<span>{{post.reply_count}} 回复</span>
@@ -86,7 +90,7 @@
 </script>
 
 <style>
-	@import '../assets/markdown-github.css';
+	/*@import '../assets/markdown-github.css';*/
 	.article .loading{
 		text-align: center;
 		padding-top: 240px;
@@ -134,7 +138,7 @@
 	}
 	.article .topic-content{
 		margin: 0 10px;
-		white-space: pre-wrap;
+		white-space: normal;
 	}
 	.article .markdown-text img {
     width: 92% !important;
