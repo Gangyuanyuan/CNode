@@ -4,7 +4,6 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Axios from 'axios'
-// import $ from 'jquery'
 
 Vue.prototype.$http = Axios // 挂载到Vue原型上
 Vue.config.productionTip = false
@@ -64,21 +63,3 @@ searchKey.onkeyup = function(e){
 		window.open('http://www.baidu.com/s?wd='+value)
 	}
 }
-
-// 点击添加类名
-// var allList = document.getElementsByClassName('topic-tab')
-// console.log(allList)
-
-// var $allList = $(".topic-tab")
-// console.log($allList)
-// for(var i=0; i<allList.length; i++){
-// 	$allList[i].click(function(){
-// 		$allList[i].addClass("current-tab").siblings().removeClass("current-tab")
-// 	})
-// }
-
-
-
-	
-
-

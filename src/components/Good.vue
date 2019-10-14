@@ -1,28 +1,24 @@
 <template>
-	<div class="postlist">
-		<!-- 在数据未返回的时候，显示这个正在加载的gif -->
-		<div class="loading" v-if="isLoading">
+  <div class="good">
+    <div class="loading" v-if="isLoading">
 			<img src="../assets/loading.gif" alt="">
 		</div>
 		<div class="content" v-else>
 			<div class="panel">
 				<!-- 帖子导航 -->
 				<div class="header">
-					<a href="#" ref="all" class="current-tab" @click="clickMe(all)">全部</a>
-					<a href="#" ref="good" @click="clickMe(good)">精华</a>
-					<a href="#" ref="share" @click="clickMe(share)">分享</a>
-					<a href="#" ref="ask" @click="clickMe(ask)">问答</a>
-					<a href="#" ref="job" @click="clickMe(job)">招聘</a>
-					<a href="#" ref="client" @click="clickMe(client)">客户端测试</a>
-
-					<!-- <a href="#" v-for="(item,index) in parts" @click="addClass(index)"
-					:class="[{'current-tab':index==currentClick},'topic-tab']">{{item}}</a> -->
+					<a href="#" id="all" @click="changeAll">全部</a>
+					<a href="#" id="good" class="current-tab" @click="changeGood">精华</a>
+					<a href="#" id="share" @click="changeShare">分享</a>
+					<a href="#" id="ask" @click="changeAsk">问答</a>
+					<a href="#" id="job" @click="changeJob">招聘</a>
+					<a href="#" id="client" @click="changeClient">客户端测试</a>
 				</div>
 				<!-- 帖子列表 -->
 				<div class="inner">
 					<div class="posts">
 						<ul>
-							<li v-for="post in posts">
+							<li v-for="post in arrGood">
 								<!-- 头像 -->
 								<router-link :to="{
 									name: 'user-info',
@@ -38,8 +34,8 @@
 									<span class="count-seperator">/</span>
 									<span class="visit-count">{{post.visit_count}}</span>
 								</span>
-								<!-- 帖子分类（动态绑定class） -->
-								<span :class="[{'put-good':(post.good == true),'put-top':(post.top == true),'topiclist-tab':(post.good != true && post.top != true)}]">{{post | tabFormatter}}</span>
+								<!-- 帖子分类 -->
+								<span class="put-good">精华</span>
 								<!-- 帖子标题 -->
 								<router-link :to="{
 									name: 'post-content',
@@ -72,14 +68,13 @@
 	import pagination from './Pagination'
 
 	export default {
-		name: 'PostList',
+		name: 'Good',
 		data: function(){
 			return{
 				isLoading: false,
-				// parts: ['全部','精华','分享','问答','招聘','客户端测试'],
-				// currentClick: 0,
-				posts: [], // 代表页面列表的数组
-				postPage: 1,
+				posts: [],
+				arrGood: [],
+				postPage: 1
 			}
 		},
 		components: {
@@ -96,50 +91,51 @@
 					.then((res)=>{
 						this.isLoading = false // 加载成功去除动画
 						this.posts = res.data.data
+						for(let i=0; i<posts.length; i++){
+							if(posts[i].good == true){
+								if(arrGood.length<=20){
+									arrGood.push(posts[i])
+								}
+							}
+						}
+						console.log(arrGood)
 					})
 					.catch(function(err){
 						console.log(err)
 					})
 			},
-			// addClass: function(index){
-    	// 	this.currentClick = index
-    	// },
     	renderList: function(value){
 				this.postPage = value
 				this.getData()
 			},
-			// changeAll(){
-			// 	$('#all').addClass('current-tab').siblings().removeClass('current-tab')
-			// },
-			// changeGood(){
-			// 	$('#good').addClass('current-tab').siblings().removeClass('current-tab')
-			// },
-			// changeShare(){
-			// 	$('#share').addClass('current-tab').siblings().removeClass('current-tab')
-			// },
-			// changeAsk(){
-			// 	$('#ask').addClass('current-tab').siblings().removeClass('current-tab')
-			// },
-			// changeJob(){
-			// 	$('#job').addClass('current-tab').siblings().removeClass('current-tab')
-			// },
-			// changeClient(){
-			// 	$('#client').addClass('current-tab').siblings().removeClass('current-tab')
-			// },
-			clickMe: function(refName){
-				this.$refs.classList.$remove('current-tab')
-				this.$refs.refName.classList.add('current-tab')
+			changeAll(){
+				$('#all').addClass('current-tab').siblings().removeClass('current-tab')
+			},
+			changeGood(){
+				$('#good').addClass('current-tab').siblings().removeClass('current-tab')
+			},
+			changeShare(){
+				$('#share').addClass('current-tab').siblings().removeClass('current-tab')
+			},
+			changeAsk(){
+				$('#ask').addClass('current-tab').siblings().removeClass('current-tab')
+			},
+			changeJob(){
+				$('#job').addClass('current-tab').siblings().removeClass('current-tab')
+			},
+			changeClient(){
+				$('#client').addClass('current-tab').siblings().removeClass('current-tab')
 			}
 		},
 		beforeMount(){
-			this.isLoading = true // 加载成功之前显示加载动画
-			this.getData() //  在页面加载之前获取数据
+			this.isLoading = true
+			this.getData()
 		}
-	}
+  }
 </script>
 
 <style scoped>
-	.loading {
+  .loading {
     text-align: center;
     padding-top: 240px;
   }
@@ -215,17 +211,9 @@
 		float: right;
 		margin-left: 20px;
 	}
-	.put-good,
-	.put-top{
+	.put-good,{
 		background: #80bd01;
 		color: #fff;
-		font-size: 12px;
-		padding: 2px 4px;
-		border-radius: 3px;
-	}
-	.topiclist-tab{
-		background: #e5e5e5;
-		color: #999;
 		font-size: 12px;
 		padding: 2px 4px;
 		border-radius: 3px;
