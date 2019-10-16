@@ -8,7 +8,7 @@
 			<div class="panel">
 				<!-- 帖子导航 -->
 				<div class="header">
-					<span :class="{'current-tab':active==1}" @click="changeTab('',1)">全部</span>
+					<span :class="{'current-tab':active==1}" @click="changeTab('all',1)">全部</span>
 					<span :class="{'current-tab':active==2}" @click="changeTab('good',2)">精华</span>
 					<span :class="{'current-tab':active==3}" @click="changeTab('share',3)">分享</span>
 					<span :class="{'current-tab':active==4}" @click="changeTab('ask',4)">问答</span>
@@ -130,7 +130,8 @@
     padding-top: 240px;
   }
 	.content{
-		padding: 0 100px;
+		padding: 0;
+		margin-right: 305px;
 	}
 	.panel{
 		margin-bottom: 13px;

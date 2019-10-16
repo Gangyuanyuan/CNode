@@ -4,6 +4,7 @@ import PostList from '../components/PostList'
 import Article from '../components/Article'
 import Userinfo from '../components/Userinfo'
 import SlideBar from '../components/SlideBar'
+import Sides from '../components/Sides'
 
 Vue.use(Router)
 
@@ -13,7 +14,8 @@ export default new Router({
     	name: 'root',
     	path: '/',
     	components: {
-    		main: PostList
+    		main: PostList,
+            sides: Sides
     	}
     },
     {
