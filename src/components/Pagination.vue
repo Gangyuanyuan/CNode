@@ -67,7 +67,7 @@
     		// }else{
     		// 	this.jduge = false;
     		// }
-    		this.$emit('handleList',this.currentPage)
+    		this.$emit('handleList',this.currentPage) // 将当前页码传递给父组件
     	}
     },
     watch: {

@@ -112,7 +112,7 @@
 				this.active = index
 				this.getData()
 			},
-    	renderList: function(value){
+    	renderList: function(value){ // 翻页
 				this.pageNumber = value
 				this.getData()
 			}

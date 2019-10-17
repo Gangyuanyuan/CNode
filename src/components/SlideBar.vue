@@ -154,6 +154,7 @@
     font-size: 14px;
     line-height: 30px;
     max-width: 270px;
+    color: #778087;
     white-space: nowrap;
   	overflow: hidden;
   	text-overflow: ellipsis;

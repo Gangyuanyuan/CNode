@@ -140,8 +140,10 @@
 		margin: 0 10px;
 		white-space: normal;
 	}
-	.article .markdown-text img {
-    width: 92% !important;
+	.article .markdown-text img{
+    width: 85% !important;
+    display: block;
+    margin: 10px auto;
   }
   .article .header.reply span{
     color: #444;
